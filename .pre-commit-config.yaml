@@ -55,7 +55,7 @@ repos:
     hooks:
       - id: ty
         name: ty
-        entry: uvx ty check shadcn/
+        entry: uv run ty check shadcn/
         language: system
         types: [python]
         pass_filenames: false
