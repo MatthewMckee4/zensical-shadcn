@@ -30,7 +30,7 @@ jobs:
       - name: Install dev environment (so ty can resolve imports)
         run: uv sync --all-extras --dev
 
-      - uses: j178/prek-action@91fd7d7cf70ae1dee9f4f44e7dfa5d1073fe6623 # v1.0.11
+      - uses: j178/prek-action@6ad80277337ad479fe43bd70701c3f7f8aa74db3 # v2.0.3
 
   test:
     name: "test (${{ matrix.os }}, py${{ matrix.python }})"
