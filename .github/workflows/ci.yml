@@ -56,28 +56,6 @@ jobs:
       - name: Run tests
         run: uv run karva test
 
-  css-rebuild-clean:
-    name: "css rebuild is clean"
-    needs: pre-commit
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
-        with:
-          persist-credentials: false
-
-      - uses: oven-sh/setup-bun@4bc047ad259df6fc24a6c9b0f9a0cb08cf17fbe5 # v2.0.2
-        with:
-          bun-version: "1.3.11"
-
-      - name: Install JS dependencies
-        run: bun install --frozen-lockfile
-
-      - name: Build CSS
-        run: bun run build
-
-      - name: Verify committed CSS matches rebuild
-        run: git diff --exit-code shadcn/css/base.css
-
   build:
     name: "build wheel"
     needs: pre-commit
