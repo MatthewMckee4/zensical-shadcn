@@ -54,7 +54,7 @@ jobs:
         run: uv sync --all-extras --dev
 
       - name: Run tests
-        run: uvx karva test
+        run: uv run karva test
 
   css-rebuild-clean:
     name: "css rebuild is clean"
