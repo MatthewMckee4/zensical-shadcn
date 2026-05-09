@@ -1,0 +1,25 @@
+[release]
+current-version = "0.0.1-alpha.1"
+
+version-files = [
+    "pyproject.toml",
+    "shadcn/__init__.py",
+]
+
+commit-message = "Release v{version}"
+branch-name = "release/v{version}"
+push = true
+confirm = true
+
+[changelog.section-labels]
+"Bug Fixes" = ["bug"]
+"Theme" = ["theme"]
+"Markdown Extensions" = ["extensions"]
+"Tooling" = ["tooling"]
+"Documentation" = ["documentation"]
+
+[changelog]
+ignore-contributors = ["dependabot[bot]"]
+ignore-labels = ["internal", "ci", "duplicate", "wontfix", "needs-decision"]
+include-contributors = true
+changelog-heading = "{version}"
