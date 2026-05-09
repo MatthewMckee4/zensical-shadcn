@@ -1,0 +1,19 @@
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+
+dist/
+build/
+site/
+
+.venv/
+uv.lock
+
+node_modules/
+
+# pre-commit/prek caches
+.cache/
+.DS_Store
+.ty_cache/
+.karva_cache/

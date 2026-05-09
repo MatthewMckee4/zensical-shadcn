@@ -1,0 +1,10 @@
+[files]
+extend-exclude = [
+  "shadcn/js/*.min.js",
+  "shadcn/css/pygments/**",
+  "shadcn/css/katex.min.css",
+  "shadcn/fonts/**",
+  "tailwind/**",
+  "shadcn/css/base.css",
+  "pages/docs/**",
+]

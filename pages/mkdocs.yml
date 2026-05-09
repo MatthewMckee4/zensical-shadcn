@@ -1,0 +1,39 @@
+site_name: "zensical-shadcn"
+site_url: "https://github.com/MatthewMckee4/zensical-shadcn"
+site_description: "shadcn theme for Zensical"
+site_author: "Matthew McKee <matthewmckee04@yahoo.co.uk>"
+repo_url: "https://github.com/MatthewMckee4/zensical-shadcn"
+
+theme:
+  name: shadcn
+  icon: null
+  topbar_sections: false
+  pygments_style:
+    light: shadcn-light
+    dark: github-dark
+
+markdown_extensions:
+  admonition:
+  codehilite:
+  fenced_code:
+  footnotes:
+  extra:
+  pymdownx.blocks.details:
+  pymdownx.tabbed:
+  pymdownx.blocks.tab:
+    combine_header_slug: true
+    separator: ___
+  pymdownx.progressbar:
+  pymdownx.snippets:
+  pymdownx.arithmatex:
+    generic: true
+  pymdownx.blocks.caption:
+  shadcn.extensions.echarts.alpha:
+  shadcn.extensions.codexec:
+  shadcn.extensions.iconify:
+  shadcn.extensions.hover_card:
+  shadcn.extensions.autonumber:
+    prefixes:
+      th: Theorem
+  shadcn.extensions.excalidraw:
+    base_dir: excalidraw

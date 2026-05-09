@@ -1,0 +1,38 @@
+[project]
+site_name = "zensical-shadcn"
+site_url = "https://github.com/MatthewMckee4/zensical-shadcn"
+site_description = "shadcn theme for Zensical"
+site_author = "Matthew McKee <matthewmckee04@yahoo.co.uk>"
+repo_url = "https://github.com/MatthewMckee4/zensical-shadcn"
+
+[project.theme]
+name = "shadcn"
+topbar_sections = false
+
+[project.theme.pygments_style]
+light = "shadcn-light"
+dark = "github-dark"
+
+[project.markdown_extensions.admonition]
+[project.markdown_extensions.codehilite]
+[project.markdown_extensions.fenced_code]
+[project.markdown_extensions.footnotes]
+[project.markdown_extensions.extra]
+[project.markdown_extensions."pymdownx.blocks.details"]
+[project.markdown_extensions."pymdownx.tabbed"]
+[project.markdown_extensions."pymdownx.blocks.tab"]
+combine_header_slug = true
+separator = "___"
+[project.markdown_extensions."pymdownx.progressbar"]
+[project.markdown_extensions."pymdownx.snippets"]
+[project.markdown_extensions."pymdownx.arithmatex"]
+generic = true
+[project.markdown_extensions."pymdownx.blocks.caption"]
+[project.markdown_extensions."shadcn.extensions.echarts.alpha"]
+[project.markdown_extensions."shadcn.extensions.codexec"]
+[project.markdown_extensions."shadcn.extensions.iconify"]
+[project.markdown_extensions."shadcn.extensions.hover_card"]
+[project.markdown_extensions."shadcn.extensions.autonumber"]
+prefixes = { th = "Theorem" }
+[project.markdown_extensions."shadcn.extensions.excalidraw"]
+base_dir = "excalidraw"

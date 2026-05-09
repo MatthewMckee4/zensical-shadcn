@@ -1,0 +1,50 @@
+[project]
+name = "zensical-shadcn"
+version = "0.1.0"
+description = "shadcn theme for Zensical"
+readme = "README.md"
+license = "MIT"
+authors = [
+    { name = "Matthew McKee", email = "matthewmckee04@yahoo.co.uk" },
+]
+requires-python = ">=3.10"
+dependencies = [
+    "zensical",
+    "pymdown-extensions>=10.14",
+]
+
+[project.urls]
+Homepage = "https://github.com/MatthewMckee4/zensical-shadcn"
+Repository = "https://github.com/MatthewMckee4/zensical-shadcn"
+Issues = "https://github.com/MatthewMckee4/zensical-shadcn/issues"
+
+[project.entry-points."mkdocs.themes"]
+shadcn = "shadcn"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["shadcn"]
+
+[dependency-groups]
+dev = [
+    "karva",
+    "ruff",
+    "ty",
+    "pre-commit",
+    "pygments>=2.19",
+    "types-markdown",
+]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 79
+
+[tool.ruff.format]
+docstring-code-format = true
+docstring-code-line-length = 79
+
+[tool.ty.environment]
+python-version = "3.10"
