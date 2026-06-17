@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./admonition.css";
+@import "./layout.css";
 @import "./article.css";
 @import "./codehilite.css";
 @import "./details.css";

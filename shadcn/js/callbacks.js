@@ -1,8 +1,17 @@
-const onSearchBarClick = (event) => {
+const openSearchDialog = () => {
 	const dialog = document.getElementById("search-dialog");
-	if (dialog) {
+	if (dialog && !dialog.open) {
 		dialog.showModal();
 	}
+
+	const input = document.getElementById("sh-search-input");
+	if (input) {
+		input.focus();
+	}
+};
+
+const onSearchBarClick = (event) => {
+	openSearchDialog();
 };
 
 const closeDialogFactory = (targetID, event) => {
@@ -16,40 +25,141 @@ const onSearchDialogClick = (event) => {
 	return closeDialogFactory("search-dialog", event);
 };
 
+const searchIndexUrl = (location) => {
+	const cleanBase =
+		typeof base_url === "string" && base_url
+			? base_url.replace(/\/$/, "")
+			: ".";
+	return new URL(`${cleanBase}/${location}`, window.location.href);
+};
+
+const clearSearchResults = () => {
+	const results = document.getElementById("mkdocs-search-results");
+	if (results) {
+		while (results.firstChild) {
+			results.removeChild(results.firstChild);
+		}
+	}
+	return results;
+};
+
+const stripSearchHtml = (value) => {
+	const element = document.createElement("div");
+	element.innerHTML = value;
+	return element.textContent || "";
+};
+
+const searchTitle = (item) => {
+	const title = item.title || item.path?.join(" / ") || "Untitled";
+	return stripSearchHtml(title).trim() || "Untitled";
+};
+
+const loadSearchItems = () => {
+	if (!window.searchItemsPromise) {
+		window.searchItemsPromise = fetch(searchIndexUrl("search.json"))
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error(`Search index returned ${response.status}`);
+				}
+				return response.json();
+			})
+			.then((index) => index.items || []);
+	}
+	return window.searchItemsPromise;
+};
+
+const renderSearchMessage = (message) => {
+	const results = clearSearchResults();
+	if (results) {
+		const empty = document.createElement("p");
+		empty.textContent = message;
+		results.appendChild(empty);
+	}
+};
+
+const renderSearchResults = (items) => {
+	const results = clearSearchResults();
+	if (!results) {
+		return;
+	}
+
+	if (items.length === 0) {
+		renderSearchMessage("No results found.");
+		return;
+	}
+
+	items.slice(0, 12).forEach((item) => {
+		const link = document.createElement("a");
+		link.href = searchIndexUrl(item.location || "").toString();
+
+		const title = document.createElement("h3");
+		title.textContent = searchTitle(item);
+		link.appendChild(title);
+
+		const text = stripSearchHtml(item.text || "").trim();
+		if (text) {
+			const excerpt = document.createElement("p");
+			excerpt.textContent =
+				text.length > 180 ? `${text.slice(0, 177).trim()}...` : text;
+			link.appendChild(excerpt);
+		}
+
+		results.appendChild(link);
+	});
+};
+
+const onLocalSearchInput = (query) => {
+	if (query.length <= 2) {
+		clearSearchResults();
+		return;
+	}
+
+	const normalizedQuery = query.toLowerCase();
+	loadSearchItems()
+		.then((items) => {
+			const matches = items.filter((item) => {
+				const text = [
+					item.title,
+					item.path?.join(" "),
+					stripSearchHtml(item.text || ""),
+				]
+					.join(" ")
+					.toLowerCase();
+				return text.includes(normalizedQuery);
+			});
+			renderSearchResults(matches);
+		})
+		.catch((error) => {
+			console.error("Search failed:", error);
+			renderSearchMessage("Search index unavailable.");
+		});
+};
+
 const onInputHandler = (event) => {
 	const query = event.target.value;
 	if (window.debounceTimer) {
 		clearTimeout(debounceTimer);
 	}
 	window.debounceTimer = setTimeout(() => {
-		if (searchWorker && query.length > 2) {
-			console.log(`Posting message { "query": "${query}" }`);
+		if (window.searchWorker && query.length > 2) {
 			// https://lunrjs.com/guides/searching.html
 			// we should append a wildcard and also a boost on exact term
 			const lunrQuery = `${query}^10 ${query}* ${query}~1`;
-			searchWorker.postMessage({ query: lunrQuery });
-		} else if (query.length > 2) {
-			console.warn("searchWorker is not defined");
+			window.searchWorker.postMessage({ query: lunrQuery });
 		} else {
-			const results = document.getElementById("mkdocs-search-results");
-			if (results) {
-				while (results.firstChild) {
-					results.removeChild(results.firstChild);
-				}
-			}
+			onLocalSearchInput(query);
 		}
 	}, 300);
 };
 
 const searchShortcutHandler = (event) => {
 	if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
-		event.preventDefault(); // Prevents default browser behavior (e.g., search bar in some apps)
-		const dialog = document.getElementById("search-dialog");
-		if (dialog) {
-			dialog.showModal();
-		}
+		event.preventDefault();
+		openSearchDialog();
 	}
 };
+
+document.addEventListener("keydown", searchShortcutHandler);
 
 const updatePygmentsStylesheet = () => {
 	const root = document.documentElement;
@@ -93,7 +203,7 @@ const onBottomSidebarDialogClick = (event) => {
 
 const onMobileMenuButtonClick = (event) => {
 	event.currentTarget.dataset.state =
-		event.target.dataset.state === "open" ? "closed" : "open";
+		event.currentTarget.dataset.state === "open" ? "closed" : "open";
 	const dialog = document.getElementById("bottom-sidebar");
 	if (dialog) {
 		dialog.showModal();

@@ -1,5 +1,5 @@
 article {
-	@apply mx-auto flex w-full max-w-2xl min-w-0 flex-1 flex-col gap-8 px-4 py-6 text-neutral-800 md:px-0 lg:py-8 dark:text-neutral-300;
+	@apply mx-auto w-full max-w-2xl min-w-0 flex-1 px-4 py-6 text-neutral-800 md:px-0 lg:py-8 dark:text-neutral-300;
 }
 
 #summary {
@@ -15,7 +15,7 @@ article strong {
 }
 
 article .typography h2 {
-	@apply mt-12 scroll-m-28 text-2xl font-medium tracking-tight lg:mt-20 [&+p]:!mt-4 *:[code]:text-2xl;
+	@apply mt-10 scroll-m-28 text-2xl font-medium tracking-tight lg:mt-12 [&+p]:!mt-3 *:[code]:text-2xl;
 }
 
 article .typography > h2 {
@@ -23,19 +23,19 @@ article .typography > h2 {
 }
 
 article .typography h3 {
-	@apply mt-8 scroll-m-28 text-xl font-semibold tracking-tight *:[code]:text-xl;
+	@apply mt-6 scroll-m-28 text-xl font-semibold tracking-tight *:[code]:text-xl;
 }
 
 article .typography h4 {
-	@apply mt-6 scroll-m-20 text-xl font-semibold tracking-tight;
+	@apply mt-5 scroll-m-20 text-xl font-semibold tracking-tight;
 }
 
 article p {
-	@apply leading-relaxed [&:not(:first-child)]:mt-6;
+	@apply leading-relaxed [&:not(:first-child)]:mt-4;
 }
 
 article .typography > div {
-	@apply [&:not(:first-child)]:mt-6;
+	@apply [&:not(:first-child)]:mt-4;
 }
 
 article a {
@@ -47,19 +47,19 @@ article blockquote {
 }
 
 article ul {
-	@apply my-6 ml-6 list-disc [&>li]:mt-2;
+	@apply my-4 ml-6 list-disc [&>li]:mt-2;
 }
 
 article li ul {
-	@apply mt-4;
+	@apply mt-3;
 }
 
 article ol {
-	@apply my-6 ml-6 list-decimal [&>li]:mt-2;
+	@apply my-4 ml-6 list-decimal [&>li]:mt-2;
 }
 
 article pre {
-	@apply block mb-4 mt-6 max-h-[650px] rounded-xl py-4 px-4;
+	@apply block mb-4 mt-4 max-h-[650px] rounded-xl px-4 py-4;
 }
 
 article > pre {

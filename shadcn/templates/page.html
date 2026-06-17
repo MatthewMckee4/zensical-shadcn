@@ -1,0 +1,51 @@
+<article class="w-full" view-transition-name="page">
+  <div class="sh-page-header">
+    <div class="sh-page-title-block">
+      <h1 id="page-title">
+        {% if page.meta and page.meta.title %}
+          {{ page.meta.title }}
+        {% elif page.title %}
+          {{ page.title }}
+        {% else %}
+          {{ config.site_name }}
+        {% endif %}
+      </h1>
+      {% if page.meta and page.meta.summary %}
+        <p id="summary">{{ page.meta.summary }}</p>
+      {% endif %}
+    </div>
+    <div class="sh-page-actions">
+      <button class="secondary" type="button" onclick="navigator.clipboard.writeText(window.location.href)">
+        <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"></path>
+          <path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"></path>
+        </svg>
+        <span>Copy Page</span>
+      </button>
+      {% if page.previous_page %}
+        <a class="button secondary icon" id="previous-button" href="{{ page.previous_page.url | url }}" aria-label="Previous">
+          <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14"></path>
+            <path d="m12 5-7 7 7 7"></path>
+          </svg>
+        </a>
+      {% endif %}
+      {% if page.next_page %}
+        <a class="button secondary icon" id="next-button" href="{{ page.next_page.url | url }}" aria-label="Next">
+          <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14"></path>
+            <path d="m12 5 7 7-7 7"></path>
+          </svg>
+        </a>
+      {% endif %}
+    </div>
+  </div>
+  <div class="typography w-full flex-1">
+    {{ page.content }}
+  </div>
+  <script>
+    document.querySelectorAll("article h2, article h3").forEach((header) => {
+      toc.observer.observe(header);
+    });
+  </script>
+</article>

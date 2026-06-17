@@ -1,0 +1,51 @@
+<header class="sh-header" view-transition-name="header">
+  <div class="sh-header-inner">
+    <button id="menu-button" class="sh-icon-button sh-menu-button" type="button" aria-label="Toggle menu" onclick="onMobileMenuButtonClick(event)" data-state="closed">
+      <span class="sh-menu-lines" aria-hidden="true">
+        <span></span>
+        <span></span>
+      </span>
+    </button>
+    <a class="sh-brand" href="{{ config.extra.homepage | d(nav.homepage.url, true) | url }}" aria-label="{{ config.site_name }}">
+      <span class="sh-brand-icon">
+        {% set override_class = "size-5" %}
+        {% include "icons/shadcn.svg" %}
+      </span>
+      {% if config.theme.show_title != false %}
+        <span class="sh-brand-title">{{ config.site_name }}</span>
+      {% endif %}
+    </a>
+    <div class="sh-header-spacer"></div>
+    {% include "templates/search.html" %}
+    <span class="sh-header-separator" aria-hidden="true"></span>
+    {% if config.repo_url %}
+      <a class="sh-icon-button sh-repo-button" href="{{ config.repo_url }}" target="_blank" rel="noreferrer" aria-label="{{ config.repo_name or 'Repository' }}">
+        {% set override_class = "size-4" %}
+        {% include "icons/github.svg" %}
+        {% if config.theme.show_stargazers != false %}
+          <span id="stargazers" class="sh-stars"></span>
+        {% endif %}
+      </a>
+      <span class="sh-header-separator" aria-hidden="true"></span>
+    {% endif %}
+    <button class="sh-icon-button sh-layout-button" type="button" title="Toggle layout" aria-label="Toggle layout" onclick="toggleLayout(event)">
+      <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect width="18" height="14" x="3" y="5" rx="2"></rect>
+        <path d="M9 5v14"></path>
+        <path d="M15 9h3"></path>
+        <path d="M15 13h3"></path>
+      </svg>
+    </button>
+    <span class="sh-header-separator" aria-hidden="true"></span>
+    <button class="sh-icon-button" type="button" title="Toggle theme" aria-label="Toggle theme" onclick="onThemeSwitch(event)">
+      <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+        <path d="M12 3l0 18"></path>
+        <path d="M12 9l4.65 -4.65"></path>
+        <path d="M12 14.3l7.37 -7.37"></path>
+        <path d="M12 19.6l8.85 -8.85"></path>
+      </svg>
+    </button>
+  </div>
+</header>
