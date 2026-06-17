@@ -1,0 +1,22 @@
+{% macro render_toc(item) %}
+  <a href="{{ item.url }}" data-active="false" data-depth="{{ item.level }}" onclick="deferSetActiveTocLink('{{ item.url }}')">
+    {{ item.title }}
+  </a>
+  {% for child in item.children %}
+    {{ render_toc(child) }}
+  {% endfor %}
+{% endmacro %}
+
+<div id="toc" view-transition-name="toc">
+  <div class="sh-toc-inner">
+    <p>On This Page</p>
+    {% set toc_items = page.toc %}
+    {% set first = toc_items | first %}
+    {% if first and first.level == 1 %}
+      {% set toc_items = first.children %}
+    {% endif %}
+    {% for item in toc_items %}
+      {{ render_toc(item) }}
+    {% endfor %}
+  </div>
+</div>

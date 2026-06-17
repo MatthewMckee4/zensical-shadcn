@@ -31,7 +31,7 @@ theme:
 ```bash
 just sync         # uv sync
 just build-css    # bun run build
-just test         # uvx karva test
+just test         # uv run karva test
 just serve        # uv run zensical serve pages/
 just lint         # uvx prek run -a
 ```

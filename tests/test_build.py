@@ -49,16 +49,34 @@ def test_zensical_build_runs() -> None:
         "base_css_linked": "css/base.css" in html,
         "geist_css_linked": "css/geist.css" in html,
         "iconify_script_linked": "iconify.min.js" in html,
-        "extends_material_base": "data-md-color-scheme" in html,
+        "search_shortcut_registered": 'document.addEventListener("keydown", searchShortcutHandler)'
+        in (SITE / "js" / "callbacks.js").read_text(),
+        "search_titles_sanitized": "title.textContent = searchTitle(item)"
+        in (SITE / "js" / "callbacks.js").read_text(),
+        "copy_button_supports_pygments_highlight": "div.codehilite, div.highlight"
+        in (SITE / "js" / "copy-button.js").read_text(),
+        "material_shell_removed": all(
+            marker not in html
+            for marker in ("md-header", "md-tabs", "md-sidebar", "md-content")
+        ),
+        "shadcn_header_rendered": 'class="sh-header"' in html,
+        "shadcn_sidebar_rendered": 'class="sh-sidebar"' in html,
+        "shadcn_toc_rendered": 'class="sh-toc"' in html,
     }
     karva.assert_json_snapshot(
         markers,
         inline="""\
         {
           "base_css_linked": true,
-          "extends_material_base": true,
+          "copy_button_supports_pygments_highlight": true,
           "geist_css_linked": true,
-          "iconify_script_linked": true
+          "iconify_script_linked": true,
+          "material_shell_removed": true,
+          "search_shortcut_registered": true,
+          "search_titles_sanitized": true,
+          "shadcn_header_rendered": true,
+          "shadcn_sidebar_rendered": true,
+          "shadcn_toc_rendered": true
         }
         """,
     )

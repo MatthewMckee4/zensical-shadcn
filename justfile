@@ -13,7 +13,7 @@ watch-css:
 
 # Run the test suite via karva
 test *args:
-    uvx karva test {{args}}
+    uv run karva test {{args}}
 
 # Run all pre-commit hooks
 lint:

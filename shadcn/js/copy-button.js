@@ -1,6 +1,6 @@
-// walk through all div.codehilite
+// walk through all code blocks
 // and add a copy button to each of them
-for (const ch of document.querySelectorAll("div.codehilite")) {
+for (const ch of document.querySelectorAll("div.codehilite, div.highlight")) {
 	// the copy button can be found anywhere in the ui.shadcn website
 	// ex: https://ui.shadcn.com/docs/theming
 	const button = document.createElement("button");

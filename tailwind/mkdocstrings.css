@@ -54,7 +54,7 @@ article .doc .doc-contents details {
 	@apply py-2;
 }
 
-article .doc .doc-contents table:not(.codehilitetable) {
+article .doc .doc-contents table:not(:is(.codehilitetable, .highlighttable)) {
 	@apply text-sm mt-2 w-full;
 }
 

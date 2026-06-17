@@ -1,0 +1,51 @@
+{% macro nav_title(item) %}
+  {% if item.meta and item.meta.sidebar_title %}
+    {{ item.meta.sidebar_title }}
+  {% else %}
+    {{ item.title }}
+  {% endif %}
+{% endmacro %}
+
+{% macro render_item(item, depth) %}
+  {% if item.children %}
+    {% if depth == 1 %}
+      <div class="sh-sidebar-group">
+        <div class="sh-sidebar-label">{{ item.title }}</div>
+        <div class="sh-sidebar-items">
+          {% for child in item.children %}
+            {{ render_item(child, depth + 1) }}
+          {% endfor %}
+        </div>
+      </div>
+    {% else %}
+      <details class="sh-sidebar-section" {% if item.active %}open{% endif %}>
+        <summary class="sh-sidebar-section-trigger">
+          <span>{{ nav_title(item) }}</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m9 18 6-6-6-6"></path>
+          </svg>
+        </summary>
+        <div class="sh-sidebar-subitems">
+          {% for child in item.children %}
+            {{ render_item(child, depth + 1) }}
+          {% endfor %}
+        </div>
+      </details>
+    {% endif %}
+  {% else %}
+    <a class="sh-sidebar-link" data-active="{{ item.active }}" href="{{ item.url | url }}">
+      <span>{{ nav_title(item) }}</span>
+      {% if item.meta and item.meta.new %}
+        <span class="sh-new-dot" title="New"></span>
+      {% endif %}
+    </a>
+  {% endif %}
+{% endmacro %}
+
+{% if nav and nav.items %}
+  <nav class="sh-sidebar-nav" aria-label="Navigation">
+    {% for item in nav.items %}
+      {{ render_item(item, 1) }}
+    {% endfor %}
+  </nav>
+{% endif %}

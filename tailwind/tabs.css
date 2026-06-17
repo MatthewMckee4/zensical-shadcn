@@ -18,7 +18,7 @@ article .tabbed-set div.tabbed-content {
 	@apply hidden order-last basis-full border-t border-t-border pt-3 overflow-auto mt-0;
 }
 
-article .tabbed-content .codehilite {
+article .tabbed-content :is(.codehilite, .highlight) {
 	@apply mt-0;
 }
 

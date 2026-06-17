@@ -1,8 +1,98 @@
-{% extends "base.html" %}
-
-{% block extrahead %}
-  {{ super() }}
-  <link rel="stylesheet" href="{{ 'css/base.css' | url }}">
-  <link rel="stylesheet" href="{{ 'css/geist.css' | url }}">
-  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js" defer></script>
-{% endblock %}
+<!doctype html>
+{% set features = config.theme.features or [] %}
+<html lang="{{ config.theme.language or 'en' }}" class="theme-default">
+  <head>
+    <script>
+      const base_url = "{{ base_url }}";
+    </script>
+    <script src="{{ 'js/dark.js' | url }}"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    {% if page.meta and page.meta.description %}
+      <meta name="description" content="{{ page.meta.description }}">
+    {% elif config.site_description %}
+      <meta name="description" content="{{ config.site_description }}">
+    {% endif %}
+    {% if page.meta and page.meta.author %}
+      <meta name="author" content="{{ page.meta.author }}">
+    {% elif config.site_author %}
+      <meta name="author" content="{{ config.site_author }}">
+    {% endif %}
+    {% if page.canonical_url %}
+      <link rel="canonical" href="{{ page.canonical_url }}">
+    {% endif %}
+    {% if page.previous_page %}
+      <link rel="prev" href="{{ page.previous_page.url | url }}">
+    {% endif %}
+    {% if page.next_page %}
+      <link rel="next" href="{{ page.next_page.url | url }}">
+    {% endif %}
+    <link rel="icon" href="{{ (config.theme.favicon or 'img/favicon.ico') | url }}">
+    {% if page.meta and page.meta.title %}
+      <title>{{ page.meta.title }} - {{ config.site_name }}</title>
+    {% elif page.title and not page.is_homepage %}
+      <title>{{ page.title | striptags }} - {{ config.site_name }}</title>
+    {% else %}
+      <title>{{ config.site_name }}</title>
+    {% endif %}
+    <link rel="stylesheet" href="{{ 'css/base.css' | url }}">
+    <link rel="stylesheet" href="{{ 'css/geist.css' | url }}">
+    {% if config.theme.pygments_style and config.theme.pygments_style.light %}
+      <link id="pygments-light" rel="stylesheet" href="{{ ('css/pygments/' ~ config.theme.pygments_style.light ~ '.css') | url }}">
+    {% endif %}
+    {% if config.theme.pygments_style and config.theme.pygments_style.dark %}
+      <link id="pygments-dark" rel="stylesheet" href="{{ ('css/pygments/' ~ config.theme.pygments_style.dark ~ '.css') | url }}" media="none">
+    {% endif %}
+    <style>
+      :root {
+        --theme-accent: {{ config.theme.accent or "oklch(62.3% 0.214 259.815)" }};
+      }
+    </style>
+    {% for path in config.extra_css %}
+      <link rel="stylesheet" href="{{ path | url }}">
+    {% endfor %}
+    {% if page.meta and page.meta.extra_css %}
+      {% for path in page.meta.extra_css %}
+        <link rel="stylesheet" href="{{ path | url }}">
+      {% endfor %}
+    {% endif %}
+    <script src="{{ 'js/callbacks.js' | url }}"></script>
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js" defer></script>
+  </head>
+  <body class="sh-body text-foreground overscroll-none font-sans antialiased">
+    <div class="sh-page" id="inner-body">
+      {% include "templates/header.html" %}
+      <main class="sh-main">
+        <div class="sh-layout">
+          <aside class="sh-sidebar" data-slot="sidebar">
+            <div class="sh-sidebar-fade sh-sidebar-fade-top"></div>
+            <div class="sh-sidebar-rule"></div>
+            <div class="sh-sidebar-content no-scrollbar" data-sidebar="content" view-transition-name="sidebar">
+              {% include "templates/sidebar.html" %}
+            </div>
+            <div class="sh-sidebar-fade sh-sidebar-fade-bottom"></div>
+          </aside>
+          <div class="sh-docs" data-slot="docs">
+            {% include "templates/page.html" %}
+            {% include "templates/bottom_navigation.html" %}
+            {% include "templates/bottom_sidebar.html" %}
+          </div>
+          <aside class="sh-toc">
+            {% include "templates/toc.html" %}
+          </aside>
+        </div>
+      </main>
+      {% include "templates/footer.html" %}
+    </div>
+    {% for script in config.extra_javascript %}
+      {{ script | script_tag }}
+    {% endfor %}
+    <script src="{{ 'js/copy-button.js' | url }}"></script>
+    <script src="{{ 'js/sidebar.js' | url }}"></script>
+    <script src="{{ 'js/slider.js' | url }}"></script>
+    <script>updatePygmentsStylesheet();</script>
+    {% if config.theme.show_stargazers != false and config.repo_url %}
+      <script>fetchStargazers("{{ config.repo_url }}");</script>
+    {% endif %}
+  </body>
+</html>

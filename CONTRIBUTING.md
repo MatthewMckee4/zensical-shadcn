@@ -11,7 +11,7 @@ bun install
 
 ```bash
 just build-css    # rebuild shadcn/css/base.css after editing tailwind/*.css
-just test         # uvx karva test
+just test         # uv run karva test
 just lint         # uvx prek run -a (formatters + linters + type-check)
 just serve        # local preview against pages/
 ```

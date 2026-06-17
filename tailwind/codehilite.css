@@ -1,45 +1,67 @@
-article .codehilite table.codehilitetable {
-	border-collapse: unset;
+article :is(.codehilite, .highlight) {
+	@apply relative mt-4 mb-4 overflow-hidden rounded-xl border bg-muted;
+}
+
+article :is(.codehilite, .highlight):has(table) {
+	@apply overflow-x-auto;
+}
+
+article :is(.codehilite, .highlight) > pre {
+	@apply m-0 max-h-[650px] overflow-auto rounded-none bg-muted px-4 py-4 text-left text-sm leading-6;
+}
+
+article :is(.codehilite, .highlight) code a {
+	@apply no-underline cursor-text;
+}
+
+article :is(table.codehilitetable, table.highlighttable) {
+	width: max-content;
+	min-width: 100%;
+	border-collapse: collapse;
 	margin: 0;
 }
 
-article .codehilite .linenos {
-	@apply text-sm text-right sticky left-0 text-[var(--color-code-number)] pr-6;
+article :is(table.codehilitetable, table.highlighttable) th.filename {
+	@apply border-0 border-b bg-muted/70 px-4 py-2 pr-12 text-left text-xs font-semibold tracking-normal text-foreground;
 }
 
-article .codehilite .hll .linenos {
+article :is(table.codehilitetable, table.highlighttable) th.filename span.filename {
+	@apply inline-flex max-w-full items-center truncate rounded-md bg-background/60 px-2 py-0.5 font-mono;
+}
+
+article :is(table.codehilitetable, table.highlighttable) tbody tr,
+article :is(table.codehilitetable, table.highlighttable) tbody tr:hover {
+	@apply border-0 bg-transparent;
+}
+
+article :is(table.codehilitetable, table.highlighttable) tbody tr td {
+	@apply border-0 p-0 align-top whitespace-normal;
+}
+
+article :is(table.codehilitetable, table.highlighttable) td.linenos {
+	@apply sticky left-0 w-px select-none border-r bg-muted text-right text-[var(--color-code-number)];
+}
+
+article :is(table.codehilitetable, table.highlighttable) td.linenos pre {
+	@apply m-0 max-h-none overflow-visible rounded-none bg-transparent px-3 py-4 text-sm leading-6;
+}
+
+article :is(table.codehilitetable, table.highlighttable) td.code {
+	@apply w-full;
+}
+
+article :is(table.codehilitetable, table.highlighttable) td.code pre {
+	@apply m-0 max-h-[650px] overflow-auto rounded-none bg-transparent px-4 py-4 text-left text-sm leading-6;
+}
+
+article :is(table.codehilitetable, table.highlighttable) pre code {
+	@apply block h-full overflow-visible whitespace-pre border-0 bg-transparent p-0;
+}
+
+article :is(.codehilite, .highlight) .hll .linenos {
 	@apply bg-transparent;
 }
 
-article .codehilite td.linenos {
+article :is(.codehilite, .highlight) td.linenos {
 	@apply pr-0;
-}
-
-article .codehilite:has(& > .codehilitetable) {
-	@apply overflow-auto;
-}
-
-article table.codehilitetable pre,
-article table.codehilitetable code {
-	@apply overflow-visible h-full;
-}
-
-article table.codehilitetable tbody tr td {
-	@apply border-0;
-}
-
-article table.codehilitetable pre {
-	@apply px-0 m-0;
-}
-
-article .codehilite {
-	@apply rounded-xl relative mt-4;
-}
-
-article .codehilite pre {
-	@apply mb-0 mt-0 overflow-auto;
-}
-
-article .codehilite code a {
-	@apply no-underline cursor-text;
 }

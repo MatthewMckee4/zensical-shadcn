@@ -11,15 +11,18 @@
 	@apply px-2 py-1.5 text-muted-foreground text-sm;
 }
 
-#mkdocs-search-results article {
+#mkdocs-search-results article,
+#mkdocs-search-results a {
 	@apply relative flex flex-col hover:bg-accent gap-2 items-start rounded px-2 py-1.5 outline-none;
 }
 
-#mkdocs-search-results article > h3 {
+#mkdocs-search-results article > h3,
+#mkdocs-search-results a > h3 {
 	@apply font-medium text-foreground;
 }
 
-#mkdocs-search-results article > p {
+#mkdocs-search-results article > p,
+#mkdocs-search-results a > p {
 	@apply text-muted-foreground text-sm mt-0;
 }
 
